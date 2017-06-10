@@ -17,7 +17,7 @@ public class WithdrawalAmountTranslationToNotesException extends Exception {
 	public WithdrawalAmountTranslationToNotesException(final long amount) {
 		final String message = //
 				MessageFormatter.arrayFormat( //
-						"Amount '{}' cannot be translated to notes", //
+						"Withdrawal amount '{}' cannot be translated to notes", //
 						new Object[] { //
 								amount //
 						} //

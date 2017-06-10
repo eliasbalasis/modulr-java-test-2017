@@ -15,16 +15,16 @@ import com.modulr.java.test.eliasbalasis.exception.ATMOutOfNotesException;
  * 
  * @author eliasbalasis
  */
-public class NoteRepositoryImpl implements NoteRepository {
+public class NoteRepositoryMemoryImpl implements NoteRepository {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(NoteRepositoryImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(NoteRepositoryMemoryImpl.class);
 
 	/**
 	 * The underlying notes persistent storage</br>
 	 * </br>
 	 * Not so much persistent however.</br>
-	 * Let's assume this connects to some small embedded RDBMS or other form of
-	 * persistent store.</br>
+	 * Let's assume this connects to some small embedded RDBMS or other
+	 * lightweight form of persistent store.</br>
 	 */
 	private Map<Note, Long> noteMap = new HashMap<>();
 
@@ -33,7 +33,7 @@ public class NoteRepositoryImpl implements NoteRepository {
 	 * 
 	 * @param noteList
 	 */
-	public NoteRepositoryImpl() {
+	public NoteRepositoryMemoryImpl() {
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class NoteRepositoryImpl implements NoteRepository {
 	 * 
 	 * @param noteList
 	 */
-	public NoteRepositoryImpl( //
+	public NoteRepositoryMemoryImpl( //
 			final Collection<Note> noteList //
 	) {
 		addNoteList(noteList);

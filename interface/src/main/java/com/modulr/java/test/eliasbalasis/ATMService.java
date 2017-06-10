@@ -5,6 +5,7 @@ import java.util.Collection;
 import com.modulr.java.test.eliasbalasis.exception.ATMOutOfNotesException;
 import com.modulr.java.test.eliasbalasis.exception.AccountBalanceNotEnoughException;
 import com.modulr.java.test.eliasbalasis.exception.AccountNotFoundException;
+import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountNotAllowedException;
 import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountTranslationToNotesException;
 
 /**
@@ -60,5 +61,6 @@ public interface ATMService {
 	) throws AccountNotFoundException, //
 			AccountBalanceNotEnoughException, //
 			ATMOutOfNotesException, //
-			WithdrawalAmountTranslationToNotesException;
+			WithdrawalAmountTranslationToNotesException, //
+			WithdrawalAmountNotAllowedException;
 }

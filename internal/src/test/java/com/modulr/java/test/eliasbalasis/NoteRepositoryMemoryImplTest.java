@@ -4,24 +4,24 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.modulr.java.test.eliasbalasis.exception.ATMOutOfNotesException;
 
 /**
- * Test for {@link NoteRepositoryImpl}
+ * Test for {@link NoteRepositoryMemoryImpl}
  * 
  * @author eliasbalasis
  */
-public class NoteRepositoryImplTest {
+public class NoteRepositoryMemoryImplTest {
 
-	private NoteRepositoryImpl noteRepository;
+	private NoteRepositoryMemoryImpl noteRepository;
 
-	@Before
+	@BeforeMethod
 	public void setup() {
-		noteRepository = new NoteRepositoryImpl();
+		noteRepository = new NoteRepositoryMemoryImpl();
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class NoteRepositoryImplTest {
 		noteRepository.tryRemoveNoteList(noteList);
 	}
 
-	@Test(expected = ATMOutOfNotesException.class)
+	@Test(expectedExceptions = { ATMOutOfNotesException.class })
 	public void tryRemoveNoteListNotEnoughFIVE() throws ATMOutOfNotesException {
 		addNoteList();
 		final Collection<Note> noteList = //
@@ -89,7 +89,7 @@ public class NoteRepositoryImplTest {
 		noteRepository.tryRemoveNoteList(noteList);
 	}
 
-	@Test(expected = ATMOutOfNotesException.class)
+	@Test(expectedExceptions = { ATMOutOfNotesException.class })
 	public void tryRemoveNoteListNotEnoughTEN() throws ATMOutOfNotesException {
 		addNoteList();
 		final Collection<Note> noteList = //
@@ -100,7 +100,7 @@ public class NoteRepositoryImplTest {
 		noteRepository.tryRemoveNoteList(noteList);
 	}
 
-	@Test(expected = ATMOutOfNotesException.class)
+	@Test(expectedExceptions = { ATMOutOfNotesException.class })
 	public void tryRemoveNoteListNotEnoughTWENTY() throws ATMOutOfNotesException {
 		addNoteList();
 		final Collection<Note> noteList = //
@@ -111,7 +111,7 @@ public class NoteRepositoryImplTest {
 		noteRepository.tryRemoveNoteList(noteList);
 	}
 
-	@Test(expected = ATMOutOfNotesException.class)
+	@Test(expectedExceptions = { ATMOutOfNotesException.class })
 	public void tryRemoveNoteListNotEnoughFIFTY() throws ATMOutOfNotesException {
 		addNoteList();
 		final Collection<Note> noteList = //

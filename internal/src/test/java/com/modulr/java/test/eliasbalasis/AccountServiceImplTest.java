@@ -1,11 +1,12 @@
 package com.modulr.java.test.eliasbalasis;
 
+
 import java.math.BigDecimal;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mockito;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.modulr.java.test.eliasbalasis.exception.AccountBalanceNotEnoughException;
 import com.modulr.java.test.eliasbalasis.exception.AccountNotFoundException;
@@ -26,7 +27,7 @@ public class AccountServiceImplTest {
 
 	private Account account;
 
-	@Before
+	@BeforeMethod
 	public void setup() throws AccountNotFoundException {
 		accountRepository = Mockito.mock(AccountRepository.class);
 		account = //

@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
 	private final AccountRepository accountRepository;
 
 	public AccountServiceImpl() {
-		accountRepository = AccountRepositoryImpl.DEFAULT;
+		accountRepository = AccountRepositoryMemoryImpl.DEFAULT;
 	}
 
 	AccountServiceImpl(final AccountRepository accountRepository) {
@@ -61,7 +61,7 @@ public class AccountServiceImpl implements AccountService {
 	) throws AccountBalanceNotEnoughException, //
 			AccountNotFoundException {
 		LOGGER.info( //
-				"Withdrawing amount of '{}' from account with number '{}'", //
+				"Withdrawing amountParameter of '{}' from account with number '{}'", //
 				withdrawalAmount, accountNumber //
 		);
 		accountRepository.withdrawAmount(accountNumber, withdrawalAmount);

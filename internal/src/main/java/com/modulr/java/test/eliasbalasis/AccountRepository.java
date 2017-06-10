@@ -31,7 +31,7 @@ public interface AccountRepository {
 	 * @param accountNumber
 	 *            The account's number
 	 * @param withdrawalAmount
-	 *            The amount to withdraw
+	 *            The amountParameter to withdraw
 	 * @throws AccountNotFoundException
 	 *             The account does not exist
 	 * @throws AccountBalanceNotEnoughException

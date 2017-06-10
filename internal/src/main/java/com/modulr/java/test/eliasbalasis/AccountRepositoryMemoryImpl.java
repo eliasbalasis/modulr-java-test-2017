@@ -15,9 +15,9 @@ import com.modulr.java.test.eliasbalasis.exception.AccountNotFoundException;
  * 
  * @author eliasbalasis
  */
-public final class AccountRepositoryImpl implements AccountRepository {
+public final class AccountRepositoryMemoryImpl implements AccountRepository {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AccountRepositoryImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountRepositoryMemoryImpl.class);
 
 	public static final String ACCOUNT_1_NUMBER = "01001";
 	public static final String ACCOUNT_2_NUMBER = "01002";
@@ -35,11 +35,11 @@ public final class AccountRepositoryImpl implements AccountRepository {
 
 	public static final AccountRepository DEFAULT = create();
 
-	static AccountRepositoryImpl create() {
-		return new AccountRepositoryImpl();
+	static AccountRepositoryMemoryImpl create() {
+		return new AccountRepositoryMemoryImpl();
 	}
 
-	private AccountRepositoryImpl() {
+	private AccountRepositoryMemoryImpl() {
 		accountMap.put(ACCOUNT_1.getNumber(), ACCOUNT_1);
 		accountMap.put(ACCOUNT_2.getNumber(), ACCOUNT_2);
 		accountMap.put(ACCOUNT_3.getNumber(), ACCOUNT_3);
@@ -88,7 +88,7 @@ public final class AccountRepositoryImpl implements AccountRepository {
 			final long withdrawalAmount //
 	) throws AccountNotFoundException, AccountBalanceNotEnoughException {
 		LOGGER.info( //
-				"Withdrawing amount of '{}' from account with number '{}'", //
+				"Withdrawing amountParameter of '{}' from account with number '{}'", //
 				withdrawalAmount, accountNumber //
 		);
 		final AccountImpl account = getAccount(accountNumber);

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.modulr.java.test.eliasbalasis.exception.ATMOutOfNotesException;
 import com.modulr.java.test.eliasbalasis.exception.AccountBalanceNotEnoughException;
 import com.modulr.java.test.eliasbalasis.exception.AccountNotFoundException;
+import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountNotAllowedException;
 import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountTranslationToNotesException;
 
 /**
@@ -38,6 +39,15 @@ public class ATMServiceImpl implements ATMService {
 	 * The service to generate displayable balance</br>
 	 */
 	private BalanceFormatter balanceFormatter;
+
+	/**
+	 * The minimum withdrawal amountParameter</br>
+	 */
+	private long minimumWithdrawalAmount = 20;
+	/**
+	 * The maximum withdrawal amountParameter</br>
+	 */
+	private long maximumWithdrawalAmount = 250;
 
 	public ATMServiceImpl( //
 			final AccountService accountService, //
@@ -90,12 +100,28 @@ public class ATMServiceImpl implements ATMService {
 	) throws AccountNotFoundException, //
 			AccountBalanceNotEnoughException, //
 			ATMOutOfNotesException, //
-			WithdrawalAmountTranslationToNotesException //
+			WithdrawalAmountTranslationToNotesException, //
+			WithdrawalAmountNotAllowedException //
 	{
 		LOGGER.info( //
-				"Withdrawing amount of '{}' from account '{}'...", //
+				"Withdrawing amountParameter of '{}' from account '{}'...", //
 				withdrawalAmount, accountNumber //
 		);
+		if ( //
+		withdrawalAmount < minimumWithdrawalAmount //
+				|| //
+				withdrawalAmount > maximumWithdrawalAmount//
+		) {
+			final WithdrawalAmountNotAllowedException error = //
+					new WithdrawalAmountNotAllowedException( //
+							withdrawalAmount, //
+							minimumWithdrawalAmount, maximumWithdrawalAmount //
+					);
+			LOGGER.error( //
+					error.getMessage() //
+			);
+			throw error;
+		}
 		final Collection<Note> noteList = //
 				noteService.translateWithdrawalAmount( //
 						withdrawalAmount, //

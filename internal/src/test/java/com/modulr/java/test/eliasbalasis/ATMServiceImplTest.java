@@ -3,14 +3,15 @@ package com.modulr.java.test.eliasbalasis;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import com.modulr.java.test.eliasbalasis.exception.ATMOutOfNotesException;
 import com.modulr.java.test.eliasbalasis.exception.AccountBalanceNotEnoughException;
 import com.modulr.java.test.eliasbalasis.exception.AccountNotFoundException;
+import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountNotAllowedException;
 import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountTranslationToNotesException;
 
 /**
@@ -22,6 +23,8 @@ public class ATMServiceImplTest {
 
 	private static final String ACCOUNT_NUMBER = "number";
 	private static final long WITHDRAWAL_AMOUNT = 100L;
+	private static final long WITHDRAWAL_AMOUNT_TOO_SMALL = 10L;
+	private static final long WITHDRAWAL_AMOUNT_TOO_LARGE = 300L;
 
 	private ATMServiceImpl service;
 
@@ -33,7 +36,7 @@ public class ATMServiceImplTest {
 	private Account account;
 	private Collection<Note> withdrawalNoteList;
 
-	@Before
+	@BeforeMethod
 	public void setup() throws AccountNotFoundException, WithdrawalAmountTranslationToNotesException {
 		accountService = Mockito.mock(AccountService.class);
 		noteService = Mockito.mock(NoteService.class);
@@ -104,7 +107,8 @@ public class ATMServiceImplTest {
 	public void withdrawAmount() throws AccountNotFoundException, //
 			AccountBalanceNotEnoughException, //
 			ATMOutOfNotesException, //
-			WithdrawalAmountTranslationToNotesException //
+			WithdrawalAmountTranslationToNotesException, //
+			WithdrawalAmountNotAllowedException //
 	{
 		service.withdrawAmount( //
 				ACCOUNT_NUMBER, //
@@ -138,6 +142,32 @@ public class ATMServiceImplTest {
 				noteRepository //
 		).removeNoteList( //
 				Mockito.same(withdrawalNoteList) //
+		);
+	}
+
+	@Test(expectedExceptions = { WithdrawalAmountNotAllowedException.class })
+	public void withdrawAmountTooSmall() throws AccountNotFoundException, //
+			AccountBalanceNotEnoughException, //
+			ATMOutOfNotesException, //
+			WithdrawalAmountTranslationToNotesException, //
+			WithdrawalAmountNotAllowedException //
+	{
+		service.withdrawAmount( //
+				ACCOUNT_NUMBER, //
+				WITHDRAWAL_AMOUNT_TOO_SMALL //
+		);
+	}
+
+	@Test(expectedExceptions = { WithdrawalAmountNotAllowedException.class })
+	public void withdrawAmountTooBig() throws AccountNotFoundException, //
+			AccountBalanceNotEnoughException, //
+			ATMOutOfNotesException, //
+			WithdrawalAmountTranslationToNotesException, //
+			WithdrawalAmountNotAllowedException //
+	{
+		service.withdrawAmount( //
+				ACCOUNT_NUMBER, //
+				WITHDRAWAL_AMOUNT_TOO_LARGE //
 		);
 	}
 }

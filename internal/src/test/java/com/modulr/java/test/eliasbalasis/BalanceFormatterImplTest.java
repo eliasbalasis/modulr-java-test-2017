@@ -2,9 +2,9 @@ package com.modulr.java.test.eliasbalasis;
 
 import java.math.BigDecimal;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  * Test for {@link BalanceFormatter}
@@ -22,7 +22,7 @@ public class BalanceFormatterImplTest {
 
 	private Account account;
 
-	@Before
+	@BeforeMethod
 	public void setup() {
 		balanceFormatter = new BalanceFormatterImpl();
 		account = new AccountImpl(ACCOUNT_NUMBER, ACCOUNT_BALANCE);

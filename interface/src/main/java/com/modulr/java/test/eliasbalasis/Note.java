@@ -21,13 +21,13 @@ public enum Note {
 	/**
 	 * The value of the note
 	 */
-	private int number;
+	private int denomination;
 
-	private Note(final int number) {
-		this.number = number;
+	private Note(final int denomination) {
+		this.denomination = denomination;
 	}
 
-	public int getNumber() {
-		return number;
+	public int getDenomination() {
+		return denomination;
 	}
 }
