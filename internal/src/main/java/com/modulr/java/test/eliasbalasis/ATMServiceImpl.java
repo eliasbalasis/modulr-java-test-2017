@@ -1,6 +1,5 @@
 package com.modulr.java.test.eliasbalasis;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 
 import org.slf4j.Logger;
@@ -33,16 +32,22 @@ public class ATMServiceImpl implements ATMService {
 	/**
 	 * The notes persistent storage service</br>
 	 */
-	private NotesRepository notesRepository;
+	private NoteRepository noteRepository;
+
+	/**
+	 * The service to generate displayable balance</br>
+	 */
+	private BalanceFormatter balanceFormatter;
 
 	public ATMServiceImpl( //
 			final AccountService accountService, //
 			final NoteService noteService, //
-			final NotesRepository notesRepository //
-	) {
+			final NoteRepository noteRepository, //
+			final BalanceFormatter balanceFormatter) {
 		this.accountService = accountService;
 		this.noteService = noteService;
-		this.notesRepository = notesRepository;
+		this.noteRepository = noteRepository;
+		this.balanceFormatter = balanceFormatter;
 	}
 
 	/*
@@ -53,10 +58,11 @@ public class ATMServiceImpl implements ATMService {
 	 */
 	@Override
 	public void replenish(Collection<Note> noteList) {
-		// TODO: provide more detailed message, this is only for demonstration
-		// of logging framework use
-		LOGGER.info("Replenishing ATM with {} notes", noteList.size());
-		notesRepository.addNoteList(noteList);
+		LOGGER.info( //
+				"Replenishing ATM with notes: {}", //
+				NoteHelper.toNoteMap(noteList) //
+		);
+		noteRepository.addNoteList(noteList);
 	}
 
 	/*
@@ -69,9 +75,12 @@ public class ATMServiceImpl implements ATMService {
 	public String checkBalance( //
 			final String accountNumber //
 	) throws AccountNotFoundException {
-		LOGGER.info("Checking balance of account '{}'", accountNumber);
+		LOGGER.info( //
+				"Checking balance of account '{}'", //
+				accountNumber //
+		);
 		final Account account = accountService.getAccount(accountNumber);
-		return formatBalance(account.getBalance());
+		return balanceFormatter.formatBalance(account);
 	}
 
 	@Override
@@ -83,15 +92,25 @@ public class ATMServiceImpl implements ATMService {
 			ATMOutOfNotesException, //
 			WithdrawalAmountTranslationToNotesException //
 	{
-		LOGGER.info("Withdrawing amount of '{}' from account '{}'", withdrawalAmount, accountNumber);
-		final Collection<Note> noteList = noteService.translateWithdrawalAmount(withdrawalAmount);
-		notesRepository.tryRemoveNoteList(noteList);
-		accountService.withdrawAmount(accountNumber, withdrawalAmount);
-		notesRepository.removeNoteList(noteList);
+		LOGGER.info( //
+				"Withdrawing amount of '{}' from account '{}'...", //
+				withdrawalAmount, accountNumber //
+		);
+		final Collection<Note> noteList = //
+				noteService.translateWithdrawalAmount( //
+						withdrawalAmount, //
+						noteRepository //
+				);
+		noteRepository.tryRemoveNoteList( //
+				noteList //
+		);
+		accountService.withdrawAmount( //
+				accountNumber, //
+				withdrawalAmount //
+		);
+		noteRepository.removeNoteList( //
+				noteList //
+		);
 		return noteList;
-	}
-
-	String formatBalance(final BigDecimal balance) {
-		return balance.toString();
 	}
 }

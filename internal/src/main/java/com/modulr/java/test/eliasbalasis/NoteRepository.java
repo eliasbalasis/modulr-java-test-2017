@@ -1,6 +1,7 @@
 package com.modulr.java.test.eliasbalasis;
 
 import java.util.Collection;
+import java.util.Map;
 
 import com.modulr.java.test.eliasbalasis.exception.ATMOutOfNotesException;
 
@@ -9,7 +10,7 @@ import com.modulr.java.test.eliasbalasis.exception.ATMOutOfNotesException;
  * 
  * @author eliasbalasis
  */
-public interface NotesRepository {
+public interface NoteRepository {
 
 	/**
 	 * Add notes to the persistent store</br>
@@ -33,4 +34,6 @@ public interface NotesRepository {
 	 * @param noteList
 	 */
 	void removeNoteList(final Collection<Note> noteList) throws ATMOutOfNotesException;
+
+	Map<Note, Long> getDeposit();
 }

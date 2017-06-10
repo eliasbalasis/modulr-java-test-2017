@@ -17,6 +17,7 @@
 		<version.maven-compiler-plugin>3.6.1</version.maven-compiler-plugin>
 		<version.maven-jar-plugin>3.0.2</version.maven-jar-plugin>
 		<version.junit>4.12</version.junit>
+		<version.mockito>1.10.19</version.mockito>
 		<version.commons-lang3>3.4</version.commons-lang3>
 		<version.slf4j-api>1.7.25</version.slf4j-api>
 	</properties>
@@ -32,6 +33,12 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${version.junit}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${version.mockito}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>

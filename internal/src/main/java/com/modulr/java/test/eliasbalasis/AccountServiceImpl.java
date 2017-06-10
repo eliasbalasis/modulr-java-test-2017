@@ -18,7 +18,15 @@ public class AccountServiceImpl implements AccountService {
 	/**
 	 * The underlying accounts repository</br>
 	 */
-	private final AccountRepository accountRepository = AccountRepositoryImpl.DEFAULT;
+	private final AccountRepository accountRepository;
+
+	public AccountServiceImpl() {
+		accountRepository = AccountRepositoryImpl.DEFAULT;
+	}
+
+	AccountServiceImpl(final AccountRepository accountRepository) {
+		this.accountRepository = accountRepository;
+	}
 
 	/*
 	 * (non-Javadoc)

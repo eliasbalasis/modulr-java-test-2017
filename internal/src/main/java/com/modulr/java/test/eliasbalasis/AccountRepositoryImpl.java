@@ -19,13 +19,25 @@ public final class AccountRepositoryImpl implements AccountRepository {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountRepositoryImpl.class);
 
-	private static AccountImpl ACCOUNT_1 = new AccountImpl("01001", BigDecimal.valueOf(2738.59d));
-	private static AccountImpl ACCOUNT_2 = new AccountImpl("01002", BigDecimal.valueOf(23.00d));
-	private static AccountImpl ACCOUNT_3 = new AccountImpl("01003", BigDecimal.valueOf(0));
+	public static final String ACCOUNT_1_NUMBER = "01001";
+	public static final String ACCOUNT_2_NUMBER = "01002";
+	public static final String ACCOUNT_3_NUMBER = "01003";
+
+	public static final BigDecimal ACCOUNT_1_BALANCE = BigDecimal.valueOf(2738.59d);
+	public static final BigDecimal ACCOUNT_2_BALANCE = BigDecimal.valueOf(23.00d);
+	public static final BigDecimal ACCOUNT_3_BALANCE = BigDecimal.valueOf(0);
+
+	static AccountImpl ACCOUNT_1 = new AccountImpl(ACCOUNT_1_NUMBER, ACCOUNT_1_BALANCE);
+	static AccountImpl ACCOUNT_2 = new AccountImpl(ACCOUNT_2_NUMBER, ACCOUNT_2_BALANCE);
+	static AccountImpl ACCOUNT_3 = new AccountImpl(ACCOUNT_3_NUMBER, ACCOUNT_3_BALANCE);
 
 	private final Map<String, AccountImpl> accountMap = new LinkedHashMap<>();
 
-	public static final AccountRepository DEFAULT = new AccountRepositoryImpl();
+	public static final AccountRepository DEFAULT = create();
+
+	static AccountRepositoryImpl create() {
+		return new AccountRepositoryImpl();
+	}
 
 	private AccountRepositoryImpl() {
 		accountMap.put(ACCOUNT_1.getNumber(), ACCOUNT_1);
