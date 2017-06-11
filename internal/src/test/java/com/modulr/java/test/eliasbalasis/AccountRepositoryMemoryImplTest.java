@@ -31,19 +31,22 @@ public class AccountRepositoryMemoryImplTest {
 	@Test
 	public void getAccount1() throws AccountNotFoundException {
 		final Account account = accountRepository.getAccount(AccountRepositoryMemoryImpl.ACCOUNT_1_NUMBER);
-		Assert.assertSame(AccountRepositoryMemoryImpl.ACCOUNT_1, account);
+		Assert.assertEquals(account.getNumber(), AccountRepositoryMemoryImpl.ACCOUNT_1_NUMBER);
+		Assert.assertEquals(account.getBalance(), AccountRepositoryMemoryImpl.ACCOUNT_1_BALANCE);
 	}
 
 	@Test
 	public void getAccount2() throws AccountNotFoundException {
 		final Account account = accountRepository.getAccount(AccountRepositoryMemoryImpl.ACCOUNT_2_NUMBER);
-		Assert.assertSame(AccountRepositoryMemoryImpl.ACCOUNT_2, account);
+		Assert.assertEquals(account.getNumber(), AccountRepositoryMemoryImpl.ACCOUNT_2_NUMBER);
+		Assert.assertEquals(account.getBalance(), AccountRepositoryMemoryImpl.ACCOUNT_2_BALANCE);
 	}
 
 	@Test
 	public void getAccount3() throws AccountNotFoundException {
 		final Account account = accountRepository.getAccount(AccountRepositoryMemoryImpl.ACCOUNT_3_NUMBER);
-		Assert.assertSame(AccountRepositoryMemoryImpl.ACCOUNT_3, account);
+		Assert.assertEquals(account.getNumber(), AccountRepositoryMemoryImpl.ACCOUNT_3_NUMBER);
+		Assert.assertEquals(account.getBalance(), AccountRepositoryMemoryImpl.ACCOUNT_3_BALANCE);
 	}
 
 	@Test

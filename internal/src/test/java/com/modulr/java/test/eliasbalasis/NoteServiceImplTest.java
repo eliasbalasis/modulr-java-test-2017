@@ -2,7 +2,6 @@ package com.modulr.java.test.eliasbalasis;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.testng.Assert;
@@ -11,6 +10,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountTranslationToNotesException;
+import com.modulr.java.test.eliasbalasis.test.TranslateWithdrawalAmountTestData;
 
 /**
  * Test for {@link NoteServiceImpl}
@@ -63,57 +63,13 @@ public class NoteServiceImplTest {
 	@DataProvider(name = DATA_PROVIDER)
 	public static Object[][] parameters() {
 		final Collection<Object[]> parameters = new ArrayList<>();
-
-		String name = null;
-		Map<Note, Long> noteMap = null;
-		long amount = 0;
-		Map<Note, Long> noteMapTranslationExpected = null;
-
-		name = "20atLeastOneFIVE";
-		noteMap = new LinkedHashMap<>();
-		noteMap.put(Note.TEN, 1L);
-		noteMap.put(Note.FIVE, 2L);
-		amount = 20L;
-		noteMapTranslationExpected = new LinkedHashMap<>();
-		noteMapTranslationExpected.put(Note.TEN, 1L);
-		noteMapTranslationExpected.put(Note.FIVE, 2L);
-		parameters.add( //
-				new Object[] { //
-						name, //
-						noteMap, //
-						amount, //
-						noteMapTranslationExpected //
-				} //
-		);
-		name = "20asTwoTEN";
-		noteMap = new LinkedHashMap<>();
-		noteMap.put(Note.TEN, 2L);
-		amount = 20L;
-		noteMapTranslationExpected = new LinkedHashMap<>();
-		noteMapTranslationExpected.put(Note.TEN, 2L);
-		parameters.add( //
-				new Object[] { //
-						name, //
-						noteMap, //
-						amount, //
-						noteMapTranslationExpected //
-				} //
-		);
-		name = "20asOneTWENTY";
-		noteMap = new LinkedHashMap<>();
-		noteMap.put(Note.TWENTY, 1L);
-		amount = 20L;
-		noteMapTranslationExpected = new LinkedHashMap<>();
-		noteMapTranslationExpected.put(Note.TWENTY, 1L);
-		parameters.add( //
-				new Object[] { //
-						name, //
-						noteMap, //
-						amount, //
-						noteMapTranslationExpected //
-				} //
-		);
-
+		for ( //
+		TranslateWithdrawalAmountTestData testData : TranslateWithdrawalAmountTestData.values() //
+		) {
+			parameters.add( //
+					testData.getParameters() //
+			);
+		}
 		return parameters.toArray(new Object[][] {});
 	}
 }

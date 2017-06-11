@@ -13,7 +13,6 @@ public class AccountImpl implements Account {
 
 	private final String number;
 	private BigDecimal balance;
-	private final Currency currency = Note.CURRENCY;
 
 	public AccountImpl(final String number, final BigDecimal balance) {
 		this.number = number;
@@ -32,10 +31,6 @@ public class AccountImpl implements Account {
 
 	@Override
 	public Currency getCurrency() {
-		return currency;
-	}
-
-	public void setBalance(final BigDecimal balance) {
-		this.balance = balance;
+		return Note.CURRENCY;
 	}
 }

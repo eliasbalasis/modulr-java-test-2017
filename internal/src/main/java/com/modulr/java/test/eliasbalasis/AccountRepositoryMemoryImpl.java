@@ -27,11 +27,7 @@ public final class AccountRepositoryMemoryImpl implements AccountRepository {
 	public static final BigDecimal ACCOUNT_2_BALANCE = BigDecimal.valueOf(23.00d);
 	public static final BigDecimal ACCOUNT_3_BALANCE = BigDecimal.valueOf(0);
 
-	static AccountImpl ACCOUNT_1 = new AccountImpl(ACCOUNT_1_NUMBER, ACCOUNT_1_BALANCE);
-	static AccountImpl ACCOUNT_2 = new AccountImpl(ACCOUNT_2_NUMBER, ACCOUNT_2_BALANCE);
-	static AccountImpl ACCOUNT_3 = new AccountImpl(ACCOUNT_3_NUMBER, ACCOUNT_3_BALANCE);
-
-	private final Map<String, AccountImpl> accountMap = new LinkedHashMap<>();
+	private final Map<String, BigDecimal> accountBalanceMap = new LinkedHashMap<>();
 
 	public static final AccountRepository DEFAULT = create();
 
@@ -40,9 +36,9 @@ public final class AccountRepositoryMemoryImpl implements AccountRepository {
 	}
 
 	private AccountRepositoryMemoryImpl() {
-		accountMap.put(ACCOUNT_1.getNumber(), ACCOUNT_1);
-		accountMap.put(ACCOUNT_2.getNumber(), ACCOUNT_2);
-		accountMap.put(ACCOUNT_3.getNumber(), ACCOUNT_3);
+		accountBalanceMap.put(ACCOUNT_1_NUMBER, ACCOUNT_1_BALANCE);
+		accountBalanceMap.put(ACCOUNT_2_NUMBER, ACCOUNT_2_BALANCE);
+		accountBalanceMap.put(ACCOUNT_3_NUMBER, ACCOUNT_3_BALANCE);
 	}
 
 	/*
@@ -60,14 +56,15 @@ public final class AccountRepositoryMemoryImpl implements AccountRepository {
 				"Retrieving account with number '{}'", //
 				accountNumber //
 		);
-		final AccountImpl account = accountMap.get(accountNumber);
-		if (account == null) {
+		final BigDecimal accountBalance = accountBalanceMap.get(accountNumber);
+		if (accountBalance == null) {
 			LOGGER.info( //
 					"Account with number '{}' does not exist", //
 					accountNumber //
 			);
 			throw new AccountNotFoundException(accountNumber);
 		}
+		final AccountImpl account = new AccountImpl(accountNumber, accountBalance);
 		LOGGER.info( //
 				"Account with number '{}' was found", //
 				accountNumber //
@@ -92,17 +89,28 @@ public final class AccountRepositoryMemoryImpl implements AccountRepository {
 				withdrawalAmount, accountNumber //
 		);
 		final AccountImpl account = getAccount(accountNumber);
-		final BigDecimal balance = account.getBalance();
+		final BigDecimal accountBalance = account.getBalance();
 		if ( //
-		balance.compareTo(BigDecimal.valueOf(withdrawalAmount)) < 0 //
+		accountBalance.compareTo(BigDecimal.valueOf(withdrawalAmount)) < 0 //
 		) {
 			LOGGER.info( //
 					"Account with number '{}' does not have enough balance", //
 					accountNumber //
 			);
-			throw new AccountBalanceNotEnoughException(accountNumber, balance, withdrawalAmount);
+			throw new AccountBalanceNotEnoughException( //
+					accountNumber, //
+					accountBalance, //
+					withdrawalAmount //
+			);
 		}
-		account.setBalance(balance.subtract(BigDecimal.valueOf(withdrawalAmount)));
+		final BigDecimal newAccountBalance = //
+				accountBalance.subtract( //
+						BigDecimal.valueOf(withdrawalAmount) //
+				);
+		accountBalanceMap.put( //
+				accountNumber, //
+				newAccountBalance //
+		);
 		LOGGER.info( //
 				"Amount of '{}' was withdrawn from account with number '{}'", //
 				withdrawalAmount, accountNumber //
