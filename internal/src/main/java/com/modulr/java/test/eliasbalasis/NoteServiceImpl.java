@@ -32,7 +32,7 @@ public class NoteServiceImpl implements NoteService {
 			final long amount, //
 			final NoteRepository noteRepository //
 	) throws WithdrawalAmountTranslationToNotesException {
-		// calculate denominations for "smallest number of notes"
+		// calculate denominations for "standard"
 		final Map<Note, Long> noteMapSmallest = calculateStandard(amount);
 
 		// calculate denominations for "multiples of 5"
@@ -56,8 +56,8 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	/**
-	 * Translate an amountParameter to note denominations using a standard
-	 * calculation
+	 * Translate an amountParameter to note denominations</br>
+	 * using a standard calculation
 	 * 
 	 * @param amountParameter
 	 *            The amountParameter to translate
@@ -105,8 +105,8 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	/**
-	 * Translate an amountParameter to note denominations using a "multiples of
-	 * 5" calculation
+	 * Translate an amountParameter to note denominations</br>
+	 * using a "multiples of 5" calculation
 	 * 
 	 * @param amountParameter
 	 *            The amountParameter to translate
@@ -208,6 +208,19 @@ public class NoteServiceImpl implements NoteService {
 		return noteList;
 	}
 
+	/**
+	 * Try to disburse at least one note of denomination FIVE
+	 * 
+	 * @param noteRepository
+	 *            The underlying notes repository
+	 * @param amount
+	 *            The amount to translate
+	 * @param noteListToExamine
+	 *            The original notes translation to be transformed
+	 * @return The transformed notes</br>
+	 *         having at least one note of denomination FIVE</br>
+	 *         (if applicable)
+	 */
 	private Collection<Note> examineAtLeastOneFIVE( //
 			final NoteRepository noteRepository, //
 			final long amount, //

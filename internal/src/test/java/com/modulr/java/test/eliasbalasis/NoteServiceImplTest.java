@@ -45,13 +45,21 @@ public class NoteServiceImplTest {
 			final String name, //
 			final Map<Note, Long> noteMap, //
 			final long amount, //
-			final Map<Note, Long> noteMapTranslationExpected //
+			final Map<Note, Long> noteMapTranslationExpected, //
+			final boolean isErrorExpected //
 	) throws WithdrawalAmountTranslationToNotesException {
 
 		final Collection<Note> noteList = NoteHelper.toNoteList(noteMap);
 		noteRepository.addNoteList(noteList);
 
-		final Collection<Note> noteListTranslation = noteService.translateWithdrawalAmount(amount, noteRepository);
+		Collection<Note> noteListTranslation = null;
+		try {
+			noteListTranslation = noteService.translateWithdrawalAmount(amount, noteRepository);
+		} catch (WithdrawalAmountTranslationToNotesException cause) {
+			if (!isErrorExpected) {
+				throw cause;
+			}
+		}
 
 		final Map<Note, Long> noteMapTranslation = NoteHelper.toNoteMap(noteListTranslation);
 		Assert.assertEquals( //

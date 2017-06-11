@@ -26,6 +26,10 @@ public enum TranslateWithdrawalAmountTestData {
 			return noteMapTranslation;
 		}
 
+		@Override
+		public boolean isErrorExpected() {
+			return false;
+		}
 	},
 	Translate20asTwoTEN( //
 			20L //
@@ -45,6 +49,10 @@ public enum TranslateWithdrawalAmountTestData {
 			return noteMapTranslation;
 		}
 
+		@Override
+		public boolean isErrorExpected() {
+			return false;
+		}
 	},
 	Translate20asOneTWENTY( //
 			20L //
@@ -64,6 +72,10 @@ public enum TranslateWithdrawalAmountTestData {
 			return noteMapTranslation;
 		}
 
+		@Override
+		public boolean isErrorExpected() {
+			return false;
+		}
 	}
 	// TODO: Add more test cases
 	;
@@ -82,13 +94,16 @@ public enum TranslateWithdrawalAmountTestData {
 
 	public abstract Map<Note, Long> getNoteMapTranslation();
 
+	public abstract boolean isErrorExpected();
+
 	public final Object[] getParameters() {
 		return //
 		new Object[] { //
 				name(), //
 				getNoteMap(), //
 				getAmount(), //
-				getNoteMapTranslation() //
+				getNoteMapTranslation(), //
+				isErrorExpected() //
 		};
 	}
 }

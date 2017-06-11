@@ -13,10 +13,11 @@ import com.modulr.java.test.eliasbalasis.exception.WithdrawalAmountTranslationTo
 public interface NoteService {
 
 	/**
-	 * Translate a withdrawal amountParameter to notes of respective denominations
+	 * Translate a withdrawal amountParameter</br>
+	 * to notes of respective denominations
 	 * 
-	 * @param amountParameter
-	 *            The amountParameter to translate
+	 * @param amount
+	 *            The amount to translate
 	 * @param noteRepository
 	 *            The underlying notes repository
 	 * @return The notes list
