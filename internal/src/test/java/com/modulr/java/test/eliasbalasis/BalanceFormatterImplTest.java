@@ -31,6 +31,6 @@ public class BalanceFormatterImplTest {
 	@Test
 	public void formatBalance() {
 		final String balanceToDisplay = balanceFormatter.formatBalance(account);
-		Assert.assertEquals(BALANCE_TO_DISPLAY, balanceToDisplay);
+		Assert.assertEquals(balanceToDisplay, BALANCE_TO_DISPLAY);
 	}
 }

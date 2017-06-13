@@ -54,8 +54,8 @@ public class AccountServiceImplTest {
 				Mockito.same(ACCOUNT_NUMBER) //
 		);
 		Assert.assertSame( //
-				this.account, //
-				account //
+				account, //
+				this.account //
 		);
 	}
 

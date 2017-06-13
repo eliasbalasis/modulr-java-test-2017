@@ -63,8 +63,8 @@ public class NoteServiceImplTest {
 
 		final Map<Note, Long> noteMapTranslation = NoteHelper.toNoteMap(noteListTranslation);
 		Assert.assertEquals( //
-				noteMapTranslationExpected, //
-				noteMapTranslation //
+				noteMapTranslation, //
+				noteMapTranslationExpected //
 		);
 	}
 

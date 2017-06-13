@@ -54,10 +54,10 @@ public class AccountRepositoryMemoryImplTest {
 		accountRepository.withdrawAmount(AccountRepositoryMemoryImpl.ACCOUNT_1_NUMBER, 500L);
 		final Account account = accountRepository.getAccount(AccountRepositoryMemoryImpl.ACCOUNT_1_NUMBER);
 		Assert.assertEquals( //
+				account.getBalance(), //
 				AccountRepositoryMemoryImpl.ACCOUNT_1_BALANCE.subtract( //
 						BigDecimal.valueOf(500L) //
-				), //
-				account.getBalance() //
+				) //
 		);
 	}
 
